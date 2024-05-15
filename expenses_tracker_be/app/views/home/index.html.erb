@@ -1,0 +1,33 @@
+<%= form_for(Type.new) do |form| %>
+  <p> <%= form.text_field :name %><br/> </p>
+  <p> <%= form.submit 'Add new type of expense' %> </p>
+<% end %>
+
+<%= form_for(Expense.new) do |form| %>
+  <p> <%= form.text_field :expense_name %><br/> </p>
+  <p> <%= form.number_field :cost, step: :any %><br/> </p>
+  <p> <%= form.date_field :created_at %><br/> </p>
+  <%= form.collection_select :type_id, Type.all, :id, :name, { include_blank: true }, class: "form-control" %>
+  <p> <%= form.submit 'Add expense' %> </p>
+<% end %>
+
+<h3> Last expense: </h3>
+<% @last_expenses.each do |last_expense| %>
+  <div>
+    <p> <%= last_expense.expense_name %> - <%= last_expense.cost.to_d %> </p>
+    <%= button_to 'Delete expense', expense_path(last_expense), method: :delete, form: {
+      data: { turbo_confirm: 'Are you sure?' } } %>
+  </div>
+<% end %>
+
+<p> Total </p>
+<% @total_expenses.each do |expense| %>
+  <%= expense[0] %> <%= expense[1] %>
+<% end %>
+
+<br>
+<p> Monthly </p>
+<% @monthly_expenses.each do |expense| %>
+  <%= expense[0] %> <%= expense[1] %>
+<% end %>
+
