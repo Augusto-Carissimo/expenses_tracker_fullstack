@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./expenses_tracker_be
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+    tty: true
+    stdin_open: true
+    env_file: expenses_tracker_be/.env
+    volumes:
+      - .:/expenses_tracker/app
+      - bundler-store:/usr/local/bundles
+    ports:
+      - 3000:3000
+
+  database:
+    image: postgres
+    restart: always
+    environment:
+     POSTGRES_NAME: expense-tracker
+     POSTGRES_USER: expense-tracker
+     POSTGRES_PASSWORD: expense-tracker
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init.sql:/expenses_tracker_be/docker-entrypoint-initdb.d/init.sql
+
+  client:
+    build: expenses_tracker_fe
+    image: react-client
+    command: sh -c "npm install && npm start"
+    ports:
+      - "4000:4000"
+    working_dir: /expenses_tracker_fe
+    volumes:
+      - ./expenses_tracker_fe:/expenses_tracker_fe
+
+volumes:
+  db_data:
+  bundler-store:
+
