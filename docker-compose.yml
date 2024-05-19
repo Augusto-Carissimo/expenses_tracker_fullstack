@@ -32,7 +32,7 @@ services:
     image: react-client
     command: sh -c "npm install && npm start"
     ports:
-      - "4000:4000"
+      - 4000:4000
     working_dir: /expenses_tracker_fe
     volumes:
       - ./expenses_tracker_fe:/expenses_tracker_fe
