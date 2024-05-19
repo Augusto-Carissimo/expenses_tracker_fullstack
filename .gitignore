@@ -26,16 +26,9 @@ expenses_tracker_fe/# production
 expenses_tracker_fe/build
 expenses_tracker_fe/# misc
 expenses_tracker_fe/.DS_Store
-expenses_tracker_fe/.env.local
-expenses_tracker_fe/.env.development.local
-expenses_tracker_fe/.env.test.local
-expenses_tracker_fe/.env.production.local
 expenses_tracker_fe/npm-debug.log*
 expenses_tracker_fe/yarn-debug.log*
 expenses_tracker_fe/yarn-error.log*
-expenses_tracker_fe/.dockerignore
-expenses_tracker_fe/Dockerfile
-expenses_tracker_fe/Dockerfile.prod
 expenses_tracker_fe/.env
 
 .vscode
