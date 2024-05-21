@@ -25,7 +25,7 @@ services:
      POSTGRES_PASSWORD: expense-tracker
     volumes:
       - db_data:/var/lib/postgresql/data
-      - ./init.sql:/expenses_tracker_be/docker-entrypoint-initdb.d/init.sql
+      - ./expenses_tracker_be/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   client:
     build: expenses_tracker_fe
