@@ -1,5 +1,5 @@
 class Type < ApplicationRecord
-  has_many :expenses
+  has_many :expenses, dependent: :destroy
 
   validates :name, uniqueness: true
 
