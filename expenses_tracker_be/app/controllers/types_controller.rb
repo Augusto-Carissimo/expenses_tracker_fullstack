@@ -1,8 +1,14 @@
 class TypesController < ApplicationController
+  skip_before_action :verify_authenticity_token
 
   def create
     CreateType.new(params: type_params, flash: flash).call
-    redirect_to root_path
+    render json: { message: 'Creating Type' }, status: :ok
+  end
+
+  def index
+    @types = AllTypes.new.call
+    render json: @types
   end
 
   private
