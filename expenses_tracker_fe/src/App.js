@@ -7,6 +7,9 @@ import TypeForm from './components/TypeForm';
 
 function App() {
   const [expenses, setExpenses] = useState([]);
+  const [total, setTotal] = useState({});
+  const [monthlyExpenses, setMonthlyExpenses] = useState([]);
+  const [error, setError] = useState(null);
 
   const fetchExpenses = () => {
     fetch(`${process.env.REACT_APP_API_URL}/expenses`, {
@@ -29,9 +32,27 @@ function App() {
       });
   };
 
-  useEffect(() => {
-    fetchExpenses();
-  }, []);
+  const fetchTotalExpenses = () => {
+    fetch(`${process.env.REACT_APP_API_URL}/expenses/total_expenses`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setTotal(data.total_expenses);
+      })
+      .catch((error) => {
+        setError(error);
+        console.error('Error fetching total expenses:', error);
+      });
+  };
 
   const handleAddExpense = (expenseData) => {
     fetch(`${process.env.REACT_APP_API_URL}/expenses`, {
@@ -49,6 +70,8 @@ function App() {
       })
       .then(() => {
         fetchExpenses();
+        fetchTotalExpenses();
+        fetchMonthlyExpenses(); // Ensure monthly expenses are updated
       })
       .catch((error) => {
         console.error('Error adding expense:', error);
@@ -67,6 +90,8 @@ function App() {
           throw new Error('Failed to delete expense');
         }
         setExpenses((prevExpenses) => prevExpenses.filter(expense => expense.id !== expenseId));
+        fetchTotalExpenses();
+        fetchMonthlyExpenses(); // Ensure monthly expenses are updated
       })
       .catch((error) => {
         console.error('Error deleting expense:', error);
@@ -95,13 +120,41 @@ function App() {
       });
   };
 
+  const fetchMonthlyExpenses = () => {
+    fetch(`${process.env.REACT_APP_API_URL}/expenses/monthly_expenses`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setMonthlyExpenses(data.monthly_expenses);
+      })
+      .catch((error) => {
+        setError(error);
+        console.error('Error fetching monthly expenses:', error);
+      });
+  };
+
+  useEffect(() => {
+    fetchExpenses();
+    fetchTotalExpenses();
+    fetchMonthlyExpenses();
+  }, []);
+
   return (
     <div>
       <TypeForm onSubmit={handleAddType} />
       <ExpenseForm onSubmit={handleAddExpense} />
       <ExpenseList expenses={expenses} onDelete={handleDeleteExpense} />
-      <TotalExpenses />
-      <MonthlyExpenses monthlyExpenses={expenses} />
+      <TotalExpenses total={total} error={error} />
+      <MonthlyExpenses monthlyExpenses={monthlyExpenses} error={error} />
     </div>
   );
 }

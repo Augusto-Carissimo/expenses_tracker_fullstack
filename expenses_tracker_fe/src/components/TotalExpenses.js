@@ -3,8 +3,26 @@ import { PieChart, Pie, Tooltip, Cell } from 'recharts';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF0088'];
 
+const renderCustomLabel = ({ name, cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+  const RADIAN = Math.PI / 180;
+  const radius = 25 + innerRadius + (outerRadius - innerRadius);
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text
+      x={x}
+      y={y}
+      fill="black"
+      textAnchor={x > cx ? 'start' : 'end'}
+      dominantBaseline="central"
+    >
+      {name}
+    </text>
+  );
+};
+
 function TotalExpenses({ total, error }) {
-  console.log(total)
   return (
     <div>
       {error && <p>Error: {error.message}</p>}
@@ -19,7 +37,7 @@ function TotalExpenses({ total, error }) {
             cy={200}
             outerRadius={80}
             fill="#8884d8"
-            label
+            label={renderCustomLabel}
           >
             {total.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
