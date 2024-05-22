@@ -1,14 +1,15 @@
-FROM node
+FROM node:16
 
 WORKDIR /client
-COPY package.json .
 
-COPY package.json ./client/package.json
-COPY package-lock.json ./client/package-lock.json
-RUN npm install
+COPY package.json package-lock.json ./
 
-COPY . ./
+RUN npm install --legacy-peer-deps
+
+COPY . .
+
 ENV NODE_ENV development
+
 EXPOSE 4000
 
 CMD ["npm", "start"]
