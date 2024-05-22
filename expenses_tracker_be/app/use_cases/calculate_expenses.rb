@@ -1,20 +1,10 @@
 class CalculateExpenses
   def calculate_total
-    total_expense = all_type_expenses.sum(&:total_expense)
-    return {} if total_expense.zero?
-
-    all_type_expenses.each_with_object({}) do |type, expense|
-      expense[type.name] = ((type.total_expense / total_expense) * 100).round(2)
-    end
+    all_type_expenses.map { |t| { name: t.name, value: t.total_expense.to_f } }
   end
 
   def calculate_monthly
-    total_monthly_expense = all_type_expenses.sum(&:month_expense)
-    return {} if total_monthly_expense.zero?
-
-    all_type_expenses.each_with_object({}) do |type, expense|
-      expense[type.name] = ((type.month_expense / total_monthly_expense) * 100).round(2)
-    end
+    all_type_expenses.map { |t| { name: t.name, value: t.month_expense.to_f } }
   end
 
   private
