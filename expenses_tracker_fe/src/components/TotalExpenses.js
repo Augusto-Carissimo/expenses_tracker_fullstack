@@ -1,47 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { PieChart, Pie, Tooltip, Cell } from 'recharts';
 
-function TotalExpenses() {
-  const [total, setTotal] = useState({});
-  const [error, setError] = useState(null);
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF0088'];
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/expenses/total_expenses`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setTotal(data.total_expenses);
-      })
-      .catch((error) => {
-        setError(error);
-        console.error('Error fetching types:', error);
-      });
-  }, []);
-
-  const renderTotalExpenses = () => {
-    if (typeof total === 'object' && total !== null) {
-      return Object.keys(total).map((key) => (
-        <div key={key}>
-          {key}: {total[key]}%
-        </div>
-      ));
-    }
-    return <div>{total}</div>;
-  };
-
+function TotalExpenses({ total, error }) {
+  console.log(total)
   return (
     <div>
       {error && <p>Error: {error.message}</p>}
       <h3>Total Expenses:</h3>
-      {renderTotalExpenses()}
+      {total.length > 0 ? (
+        <PieChart width={400} height={400}>
+          <Pie
+            dataKey="value"
+            isAnimationActive={false}
+            data={total}
+            cx={200}
+            cy={200}
+            outerRadius={80}
+            fill="#8884d8"
+            label
+          >
+            {total.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+        </PieChart>
+      ) : (
+        <p>No data available</p>
+      )}
     </div>
   );
 }
