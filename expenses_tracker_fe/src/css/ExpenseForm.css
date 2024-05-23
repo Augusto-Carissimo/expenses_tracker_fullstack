@@ -1,0 +1,51 @@
+.container-expense-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-gap: 10px;
+  grid-template-areas:
+    "name-form cost-form"
+    "date-form type-form"
+    "submit-button submit-button";
+  width: 200%;
+}
+
+.name-form {
+  grid-area: name-form;
+}
+
+.cost-form {
+  grid-area: cost-form;
+
+}
+
+.date-form {
+  grid-area: date-form;
+}
+
+.type-form {
+  grid-area: type-form;
+}
+
+.submit-button {
+  grid-area: submit-button;
+  text-align: center;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.container-expense-form form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-gap: 10px;
+  grid-template-areas:
+    "name-form cost-form"
+    "date-form type-form"
+    "submit-button submit-button";
+}

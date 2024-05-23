@@ -1,0 +1,31 @@
+.container-type-form {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(3, auto);
+  grid-template-areas:
+    "title-type-form"
+    "form-type-form"
+    "button-type-form";
+  text-align: center;
+}
+
+.title-type-form {
+  grid-area: title-type-form;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-type-form {
+  grid-area: form-type-form;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.button-type-form {
+  grid-area: button-type-form;
+  justify-content: center;
+  align-items: center;
+}
+

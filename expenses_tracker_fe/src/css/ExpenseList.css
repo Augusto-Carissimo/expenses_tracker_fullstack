@@ -1,0 +1,13 @@
+.expense-item {
+  display: grid;
+  grid-template-columns: 3fr 2fr 1fr auto;
+  grid-gap: 1px;
+  align-items: center;
+}
+
+.expense-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
