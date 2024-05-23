@@ -1,5 +1,6 @@
 import React from 'react';
 import { PieChart, Pie, Tooltip, Cell } from 'recharts';
+import '../css/TotalExpenses.css'; // Import the CSS file
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF0088'];
 
@@ -24,18 +25,18 @@ const renderCustomLabel = ({ name, cx, cy, midAngle, innerRadius, outerRadius, p
 
 function TotalExpenses({ total, error }) {
   return (
-    <div>
+    <div className="total-expenses-container">
       {error && <p>Error: {error.message}</p>}
-      <h3>Total Expenses:</h3>
+      <h3 className="total-expenses-title">Total Expenses</h3>
       {total.length > 0 ? (
-        <PieChart width={400} height={400}>
+        <PieChart width={600} height={300} className="pie-chart">
           <Pie
             dataKey="value"
             isAnimationActive={false}
             data={total}
-            cx={200}
-            cy={200}
-            outerRadius={80}
+            cx={300}
+            cy={150}
+            outerRadius={100}
             fill="#8884d8"
             label={renderCustomLabel}
           >
