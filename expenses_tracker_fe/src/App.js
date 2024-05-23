@@ -4,6 +4,7 @@ import ExpenseList from './components/ExpenseList';
 import TotalExpenses from './components/TotalExpenses';
 import MonthlyExpenses from './components/MonthlyExpenses';
 import TypeForm from './components/TypeForm';
+import './App.css';
 
 function App() {
   const [expenses, setExpenses] = useState([]);
@@ -149,12 +150,22 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <TypeForm onSubmit={handleAddType} />
-      <ExpenseForm onSubmit={handleAddExpense} />
-      <ExpenseList expenses={expenses} onDelete={handleDeleteExpense} />
-      <TotalExpenses total={total} error={error} />
-      <MonthlyExpenses monthlyExpenses={monthlyExpenses} error={error} />
+    <div className="container">
+      <div className="sidebar1">
+        <ExpenseForm onSubmit={handleAddExpense} />
+      </div>
+      <div className="sidebar2">
+        <ExpenseList expenses={expenses} onDelete={handleDeleteExpense} />
+      </div>
+      <div className="footer">
+        <TypeForm onSubmit={handleAddType} />
+      </div>
+      <div className="main1">
+        <MonthlyExpenses monthlyExpenses={monthlyExpenses} error={error} />
+      </div>
+      <div className="main2">
+        <TotalExpenses total={total} error={error} />
+      </div>
     </div>
   );
 }

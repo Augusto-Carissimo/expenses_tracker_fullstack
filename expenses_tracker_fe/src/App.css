@@ -1,38 +1,38 @@
-.App {
-  text-align: center;
+.container {
+  margin: 30px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(6, auto);
+  grid-gap: 10px;
+  grid-template-areas:
+    'sidebar1 sidebar1 main1 main1 main1 main2 main2 main2'
+    'sidebar1 sidebar1 main1 main1 main1 main2 main2 main2'
+    'sidebar2 sidebar2 main1 main1 main1 main2 main2 main2'
+    'sidebar2 sidebar2 main1 main1 main1 main2 main2 main2'
+    'sidebar2 sidebar2 footer1 footer1 footer footer footer footer2'
+    'sidebar2 sidebar2 footer1 footer1 footer footer footer footer2';
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.sidebar1 {
+  grid-area: sidebar1;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.sidebar2 {
+  grid-area: sidebar2;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.sidebar3 {
+  grid-area: sidebar3;
 }
 
-.App-link {
-  color: #61dafb;
+.main1 {
+  grid-area: main1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.main2 {
+  grid-area: main2;
+}
+
+.footer {
+  grid-area: footer;
 }
