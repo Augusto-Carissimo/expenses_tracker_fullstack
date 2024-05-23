@@ -29,6 +29,5 @@ expenses_tracker_fe/.DS_Store
 expenses_tracker_fe/npm-debug.log*
 expenses_tracker_fe/yarn-debug.log*
 expenses_tracker_fe/yarn-error.log*
-expenses_tracker_fe/.env
 
 .vscode
