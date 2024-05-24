@@ -72,7 +72,7 @@ function App() {
       .then(() => {
         fetchExpenses();
         fetchTotalExpenses();
-        fetchMonthlyExpenses(); // Ensure monthly expenses are updated
+        fetchMonthlyExpenses();
       })
       .catch((error) => {
         console.error('Error adding expense:', error);
@@ -90,9 +90,9 @@ function App() {
         if (!response.ok) {
           throw new Error('Failed to delete expense');
         }
-        setExpenses((prevExpenses) => prevExpenses.filter(expense => expense.id !== expenseId));
+        fetchExpenses();
         fetchTotalExpenses();
-        fetchMonthlyExpenses(); // Ensure monthly expenses are updated
+        fetchMonthlyExpenses();
       })
       .catch((error) => {
         console.error('Error deleting expense:', error);
