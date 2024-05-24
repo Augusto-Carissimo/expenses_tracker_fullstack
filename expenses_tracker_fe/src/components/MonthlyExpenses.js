@@ -2,7 +2,7 @@ import React from 'react';
 import { PieChart, Pie, Tooltip, Cell } from 'recharts';
 import '../css/MonthlyExpenses.css';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF0088'];
+const COLORS = ['#8D9AD3', '#D3CC8D', '#8DD3C7', '#D38DA4', '#D3998D'];
 
 const renderCustomLabel = ({ name, cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
   const RADIAN = Math.PI / 180;
