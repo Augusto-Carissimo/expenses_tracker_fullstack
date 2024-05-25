@@ -1,13 +1,11 @@
 .container {
-  margin: 30px;
+  margin: 20px;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(6, auto);
+  grid-template-rows: 1fr 1fr 1fr auto;
   grid-gap: 10px;
   grid-template-areas:
     'sidebar1 sidebar1 main1 main1 main1 main2 main2 main2'
-    'sidebar1 sidebar1 main1 main1 main1 main2 main2 main2'
-    'sidebar2 sidebar2 main1 main1 main1 main2 main2 main2'
     'sidebar2 sidebar2 main1 main1 main1 main2 main2 main2'
     'sidebar2 sidebar2 footer1 footer1 footer footer footer footer2'
     'sidebar2 sidebar2 footer1 footer1 footer footer footer footer2';
@@ -35,4 +33,5 @@
 
 .footer {
   grid-area: footer;
+  align-self: end;
 }
