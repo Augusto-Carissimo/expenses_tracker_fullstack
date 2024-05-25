@@ -24,30 +24,31 @@ const renderCustomLabel = ({ name, cx, cy, midAngle, innerRadius, outerRadius, p
 };
 
 function TotalExpenses({ total, error }) {
-  const data = total.length > 0 ? total : [{ name: 'add Type of expense', value: 1 }];
-  const isEmptyData = total.length === 0;
-
   return (
     <div className="total-expenses-container">
       {error && <p>Error: {error.message}</p>}
       <h3 className="total-expenses-title">Total Expenses</h3>
-      <PieChart width={600} height={300} className="pie-chart">
-        <Pie
-          dataKey="value"
-          isAnimationActive={false}
-          data={data}
-          cx={300}
-          cy={150}
-          outerRadius={100}
-          fill="#8884d8"
-          label={renderCustomLabel}
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={isEmptyData ? '#e0e0e0' : COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip />
-      </PieChart>
+      {total.length > 0 ? (
+        <PieChart width={600} height={300} className="pie-chart">
+          <Pie
+            dataKey="value"
+            isAnimationActive={false}
+            data={total}
+            cx={300}
+            cy={150}
+            outerRadius={100}
+            fill="#8884d8"
+            label={renderCustomLabel}
+          >
+            {total.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+        </PieChart>
+      ) : (
+        <p>No data available</p>
+      )}
     </div>
   );
 }

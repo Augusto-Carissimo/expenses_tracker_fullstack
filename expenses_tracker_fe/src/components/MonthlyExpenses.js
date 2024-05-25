@@ -24,30 +24,31 @@ const renderCustomLabel = ({ name, cx, cy, midAngle, innerRadius, outerRadius, p
 };
 
 function MonthlyExpenses({ monthlyExpenses, error }) {
-  const data = monthlyExpenses.length > 0 ? monthlyExpenses : [{ name: 'add Type of expense', value: 1 }];
-  const isEmptyData = monthlyExpenses.length === 0;
-
   return (
     <div className="monthly-expenses-container">
       {error && <p>Error: {error.message}</p>}
       <h3 className="monthly-expenses-title">Monthly Expenses</h3>
-      <PieChart width={600} height={300} className="pie-chart">
-        <Pie
-          dataKey="value"
-          isAnimationActive={false}
-          data={data}
-          cx={300}
-          cy={150}
-          outerRadius={100}
-          fill="#8884d8"
-          label={renderCustomLabel}
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={isEmptyData ? '#e0e0e0' : COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip />
-      </PieChart>
+      {monthlyExpenses.length > 0 ? (
+        <PieChart width={600} height={300} className="pie-chart">
+          <Pie
+            dataKey="value"
+            isAnimationActive={false}
+            data={monthlyExpenses}
+            cx={300}
+            cy={150}
+            outerRadius={100}
+            fill="#8884d8"
+            label={renderCustomLabel}
+          >
+            {monthlyExpenses.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+        </PieChart>
+      ) : (
+        <p>No data available</p>
+      )}
     </div>
   );
 }
