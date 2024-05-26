@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TypesList from './TypesList';
 import '../css/ExpenseForm.css';
 
-function ExpenseForm({ onSubmit }) {
+function ExpenseForm({ onSubmit, types }) {
   const [expenseName, setExpenseName] = useState('');
   const [cost, setCost] = useState('');
   const [createdAt, setCreatedAt] = useState('');
@@ -56,7 +56,7 @@ function ExpenseForm({ onSubmit }) {
             />
           </div>
           <div className="type-form">
-            <TypesList typeId={typeId} setTypeId={setTypeId} />
+            <TypesList types={types} typeId={typeId} setTypeId={setTypeId} />
           </div>
           <div className="submit-button">
             <button type="submit">Add Expense</button>

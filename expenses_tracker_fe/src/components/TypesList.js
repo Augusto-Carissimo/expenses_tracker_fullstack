@@ -1,34 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-function TypesList({ typeId, setTypeId }) {
-  const [types, setTypes] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/types/`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setTypes(data);
-      })
-      .catch((error) => {
-        setError(error);
-        console.error('Error fetching types:', error);
-      });
-  }, []);
-
+function TypesList({ types, typeId, setTypeId }) {
   return (
     <div>
-      {error && <p>Error: {error.message}</p>}
       <select value={typeId} onChange={(e) => setTypeId(e.target.value)}>
         <option value="">Select Type</option>
         {types.map((type) => (

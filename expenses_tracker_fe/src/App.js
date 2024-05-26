@@ -4,13 +4,22 @@ import ExpenseList from './components/ExpenseList';
 import TotalExpenses from './components/TotalExpenses';
 import MonthlyExpenses from './components/MonthlyExpenses';
 import TypeForm from './components/TypeForm';
+import TypesList from './components/TypesList';
 import './App.css';
 
 function App() {
   const [expenses, setExpenses] = useState([]);
   const [total, setTotal] = useState({});
   const [monthlyExpenses, setMonthlyExpenses] = useState([]);
+  const [types, setTypes] = useState([]);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchExpenses();
+    fetchTotalExpenses();
+    fetchMonthlyExpenses();
+    fetchTypes();
+  }, []);
 
   const fetchExpenses = () => {
     fetch(`${process.env.REACT_APP_API_URL}/expenses`, {
@@ -52,6 +61,50 @@ function App() {
       .catch((error) => {
         setError(error);
         console.error('Error fetching total expenses:', error);
+      });
+  };
+
+  const fetchTypes = () => {
+    fetch(`${process.env.REACT_APP_API_URL}/types/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setTypes(data);
+      })
+      .catch((error) => {
+        setError(error);
+        console.error('Error fetching types:', error);
+      });
+  };
+
+  const fetchMonthlyExpenses = () => {
+    fetch(`${process.env.REACT_APP_API_URL}/expenses/monthly_expenses`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setMonthlyExpenses(data.monthly_expenses);
+      })
+      .catch((error) => {
+        setError(error);
+        console.error('Error fetching monthly expenses:', error);
       });
   };
 
@@ -115,44 +168,17 @@ function App() {
         if (!response.ok) {
           throw new Error('Failed to add type');
         }
+        fetchTypes(); // Re-fetch types after adding a new type
       })
       .catch((error) => {
         console.error('Error adding type:', error);
       });
   };
 
-  const fetchMonthlyExpenses = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/expenses/monthly_expenses`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setMonthlyExpenses(data.monthly_expenses);
-      })
-      .catch((error) => {
-        setError(error);
-        console.error('Error fetching monthly expenses:', error);
-      });
-  };
-
-  useEffect(() => {
-    fetchExpenses();
-    fetchTotalExpenses();
-    fetchMonthlyExpenses();
-  }, []);
-
   return (
     <div className="container">
       <div className="sidebar1">
-        <ExpenseForm onSubmit={handleAddExpense} />
+        <ExpenseForm onSubmit={handleAddExpense} types={types} />
       </div>
       <div className="sidebar2">
         <ExpenseList expenses={expenses} onDelete={handleDeleteExpense} />
